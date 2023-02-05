@@ -1,4 +1,5 @@
 ﻿using Gather.ApplicationCore.Entities;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,12 @@ namespace WebBanHang.BL.BL
     public class MailBL : BaseBL<MailRequest>, IMailBL
     {
         IMailDL _mailDL;
+        private IConfiguration _configuration;
 
-        public MailBL(IBaseDL<MailRequest> baseDL, IMailDL mailDL) : base(baseDL)
+        public MailBL(IBaseDL<MailRequest> baseDL, IMailDL mailDL, IConfiguration configuration) : base(baseDL)
         {
             _mailDL = mailDL;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -30,19 +33,21 @@ namespace WebBanHang.BL.BL
         public ServiceResult sendEmail(MailRequest mailContent)
         {
             ServiceResult serviceResult = new ServiceResult();
+            var mailSetting = _configuration.GetSection("MailSettings");
             MailMessage mail = new MailMessage();
-            mail.To.Add("macrohd34@gmail.com");
-            mail.From = new MailAddress("nguyendien2804@gmail.com", "360 FOR MEN");
-            mail.Subject = "360 For Men test";
-            mail.Body = "<div>Hello mail</div>";
+            mail.To.Add(mailContent.ToEmail);
+            mail.From = new MailAddress(mailSetting["Mail"], mailSetting["DisplayName"]);
+            mail.Subject = mailContent.Subject;
+            mail.Body = mailContent.Body;
             mail.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient();
-            smtp.Port = 587;
+            
+            smtp.Port = int.Parse(mailSetting["Port"]);
             smtp.EnableSsl = true;
             smtp.UseDefaultCredentials = false;
-            smtp.Host = "smtp.gmail.com";
-            smtp.Credentials = new NetworkCredential("nguyendien2804@gmail.com", "cstebbvezjruwbyz");
+            smtp.Host = mailSetting["Host"];
+            smtp.Credentials = new NetworkCredential(mailSetting["Mail"], mailSetting["Password"]);
             smtp.Send(mail);
 
             return serviceResult;

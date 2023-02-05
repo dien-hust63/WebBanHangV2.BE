@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebBanHang.Api.Services;
+using WebBanHang.Common.Entities;
+using WebBanHang.Common;
 using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
@@ -21,6 +24,40 @@ namespace WebBanHang.Api.Controllers
             _employeeBL = employeeBL;
         }
 
-      
+        [HttpPost("active")]
+        public ServiceResult activeAccount(Employee employee)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _employeeBL.activeAccount(employee);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("deactive")]
+        public ServiceResult deactiveAccount(Employee employee)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _employeeBL.deactiveAccount(employee);
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+
     }
 }

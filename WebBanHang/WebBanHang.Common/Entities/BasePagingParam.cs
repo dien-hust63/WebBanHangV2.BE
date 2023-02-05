@@ -21,7 +21,7 @@ namespace WebBanHang.Common.Entities
         /// </summary>
         public string FilterFormula { get; set; }
 
-        public List<OrderBy> ListOrderBy { get; set; } = null;
+        public List<OrderBy> ListOrderBy { get; set; }
 
         public string TableName { get; set; }
     }
