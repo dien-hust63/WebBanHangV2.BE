@@ -14,6 +14,6 @@ namespace WebBanHang.Common.Interfaces.DL
 
         public Employee getEmployeeByEmail(string email);
 
-
+        public List<RoleModule> GetListRoleModuleByUser(string email);
     }
 }

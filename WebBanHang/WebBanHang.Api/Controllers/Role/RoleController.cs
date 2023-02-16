@@ -1,5 +1,6 @@
 ﻿using Gather.ApplicationCore.Entities;
 using Gather.ApplicationCore.Entities.Param;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,53 @@ namespace WebBanHang.Api.Controllers
         {
             _baseBL = baseBL;
             _roleBL = roleBL;
+        }
+
+
+        [HttpPost("insertRole")]
+        public ServiceResult insertRoleCustom([FromBody] Dictionary<string, object> param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _roleBL.insertRoleCustom(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+
+        [HttpPost("updateRole")]
+        public ServiceResult updateRoleCustom([FromBody] Dictionary<string, object> param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _roleBL.updateRoleCustom(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpGet("getDetail/{entityId}")]
+        public ServiceResult getRoleDetail(int entityId)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _roleBL.getRoleDetail(entityId);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
         }
 
 

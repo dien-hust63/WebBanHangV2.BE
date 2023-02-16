@@ -1,5 +1,6 @@
 ﻿using Gather.ApplicationCore.Entities;
 using Gather.ApplicationCore.Entities.Param;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,55 +12,54 @@ using WebBanHang.Common;
 using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebBanHang.Api.Controllers
 {
-    [Authorize]
-    public class EmployeeController : BaseEntityController<Employee>
+    public class ModuleController : BaseEntityController<Module>
     {
-        IBaseBL<Employee> _baseBL;
-        IEmployeeBL _employeeBL;
-        public EmployeeController(IBaseBL<Employee> baseBL, IEmployeeBL employeeBL) :base(baseBL)
+        IBaseBL<Module> _baseBL;
+        IModuleBL _moduleBL;
+        public ModuleController(IBaseBL<Module> baseBL, IModuleBL moduleBL) : base(baseBL)
         {
             _baseBL = baseBL;
-            _employeeBL = employeeBL;
+            _moduleBL = moduleBL;
         }
 
-        [HttpPost("active")]
-        public ServiceResult activeAccount(Employee employee)
+
+        [HttpPost("getModulePermission")]
+        public ServiceResult getModulePermission()
         {
 
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _employeeBL.activeAccount(employee);
                 return serviceResult;
             }
             catch (Exception ex)
+
             {
                 serviceResult.setError(ex.Message);
             }
             return serviceResult;
         }
 
-        [HttpPost("deactive")]
-        public ServiceResult deactiveAccount(Employee employee)
+        [HttpPost("getModulePermissionDefault")]
+        public ServiceResult getModulePermissionDefault()
         {
 
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _employeeBL.deactiveAccount(employee);
+                serviceResult = _moduleBL.getModulePermissionDefault();
                 return serviceResult;
             }
             catch (Exception ex)
+
             {
                 serviceResult.setError(ex.Message);
             }
             return serviceResult;
         }
-
 
     }
 }

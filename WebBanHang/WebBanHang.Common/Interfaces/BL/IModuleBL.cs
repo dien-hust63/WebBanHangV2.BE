@@ -8,10 +8,8 @@ using WebBanHang.Common.Interfaces.Base;
 
 namespace WebBanHang.Common.Interfaces.BL
 {
-    public interface IProductBL : IBaseBL<Product>
+    public interface IModuleBL : IBaseBL<Module>
     {
-        public Task<ServiceResult> InsertProduct(Product product);
-
-        public ServiceResult InsertProductDetail(Dictionary<string, object> param);
+        public ServiceResult getModulePermissionDefault();
     }
 }

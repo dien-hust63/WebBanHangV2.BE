@@ -10,5 +10,13 @@ namespace WebBanHang.Common.Interfaces.DL
     public interface IProductDL : IBaseDL<Product>
     {
         public bool saveImageLinkProduct(string productcode, string imageLink);
+
+        /// <summary>
+        /// Thêm mới product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="listProductDetail"></param>
+        /// <returns></returns>
+        public Product InsertProductDetail(Product product, List<ProductDetail> listProductDetail);
     }
 }

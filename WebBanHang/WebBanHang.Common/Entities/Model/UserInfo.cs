@@ -7,27 +7,21 @@ using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.Common.Entities.Model
 {
-    public class Employee
+    public class UserInfo
     {
-        public int idemployee { get; set; }
+        public int iduser { get; set; }
 
-        public string employeecode { get; set; }
-
-        public string employeename{ get; set; }
+        public string username { get; set; }
 
         public string email { get; set; }
 
-        public string password { get; set; }
+        public bool isemployee { get; set; }
 
-        public int branchid { get; set; }
+        public int? branchid { get; set; }
 
         public string branchname { get; set; }
 
-        public AccountStatus statusid { get; set; }
-
-        public string statustext { get; set; }
-
-        public int idrole { get; set; }
+        public int? idrole { get; set; }
 
         public string rolename { get; set; }
     }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebBanHang.Common.DBHelper;
 using WebBanHang.Common.Entities.Model;
+using WebBanHang.Common.Interfaces.BL;
 using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.ServiceCollection;
 using WebBanHang.DL.BaseDL;
@@ -53,6 +54,19 @@ namespace WebBanHang.DL.DL
             dynamicParam.Add("@statustext", AccountStatus.Deactive.GetDisplayName());
             dynamicParam.Add("@idemployee", employee.idemployee);
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
+        }
+
+        /// <summary>
+        /// Lấy thoogn tin nhân viên theo email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Employee GetEmployeeInfoByEmail(string email)
+        {
+            string sql = "select * from employee e where e.email = @email limit 1";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@email", email);
+            return _dbHelper.QueryFirstOrDefault<Employee>(sql, dynamicParam, commandType: CommandType.Text);
         }
     }
 }

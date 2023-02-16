@@ -30,6 +30,7 @@ builder.Services.AddScoped<CoreServicesCollection>();
 builder.Services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
 builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
 builder.Services.AddScoped<IRoleBL, RoleBL>();
+builder.Services.AddScoped<IModuleBL, ModuleBL>();
 builder.Services.AddScoped<IProductBL, ProductBL>();
 builder.Services.AddScoped<IBranchBL, BranchBL>();
 builder.Services.AddScoped<IAuthenticationBL, AuthenticationBL>();
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IMailDL, MailDL>();
 //BL DI
 builder.Services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
 builder.Services.AddScoped<IEmployeeDL, EmployeeDL>();
+builder.Services.AddScoped<IModuleDL, ModuleDL>();
 builder.Services.AddScoped<IRoleDL, RoleDL>();
 builder.Services.AddScoped<IBranchDL, BranchDL>();
 builder.Services.AddScoped<IAuthenticationDL, AuthenticationDL>();

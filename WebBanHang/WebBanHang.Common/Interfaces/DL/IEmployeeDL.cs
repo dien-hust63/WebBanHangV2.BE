@@ -13,5 +13,12 @@ namespace WebBanHang.Common.Interfaces.DL
         bool activeAccount(Employee employee);
 
         bool deactiveAccount(Employee employee);
+
+        /// <summary>
+        /// Lấy thông tin nhân viên theo email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        Employee GetEmployeeInfoByEmail(string email);
     }
 }

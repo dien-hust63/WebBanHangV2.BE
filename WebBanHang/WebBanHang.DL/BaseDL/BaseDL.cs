@@ -121,14 +121,11 @@ namespace WebBanHang.DL.BaseDL
         /// ModifiedBy: nvdien(19/8/2021)
         public TEntity GetEntityByProperty(string propName, object propValue)
         {
-            using (_dbConnection = new MySqlConnection(_connectionString))
-            {
-                var sqlCommand = $"SELECT * from {_className} WHERE {propName} = @{propName}";
-                DynamicParameters dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add($"@{propName}", propValue);
-                var entity = _dbConnection.QueryFirstOrDefault<TEntity>(sqlCommand, param: dynamicParameters);
-                return entity;
-            }
+            var sqlCommand = $"SELECT * from {_className} WHERE {propName} = @{propName}";
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add($"@{propName}", propValue);
+            var entity = _dbHelper.QueryFirstOrDefault<TEntity>(sqlCommand,  dynamicParameters);
+            return entity;
         }
         /// <summary>
         /// Lay danh sach du lieu paging

@@ -107,5 +107,16 @@ namespace WebBanHang.BL.BL
             mailContent.Body = bodyContent;
             _mailBL.sendEmail(mailContent);
         }
+        /// <summary>
+        /// Lấy thoogn tin nhân viên theo email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Employee GetEmployeeInfoByEmail(string email) 
+        {
+            Employee employee = _employeeDL.GetEmployeeInfoByEmail(email);
+            return employee;
+        }
+
     }
 }

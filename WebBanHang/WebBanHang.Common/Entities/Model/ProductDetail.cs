@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using WebBanHang.Common.Attributes;
 
 namespace WebBanHang.Common.Entities.Model
 {
-    public class ProductNotFile
+    public class ProductDetail
     {
         [AttributeCustomId]
-        public int idproduct { get; set; }
+        public int idproductdetail { get; set; }
 
         [AttributeCustomUnique]
         [AttributeCustomDisplayName("Mã hàng hóa")]
@@ -22,20 +22,6 @@ namespace WebBanHang.Common.Entities.Model
         public string productname { get; set; }
 
         /// <summary>
-        /// Mô tả
-        /// </summary>
-        public string description { get; set; }
-
-        /// <summary>
-        /// Nhóm hàng hóa
-        /// </summary>
-        public int? categoryid { get; set; }
-
-        /// <summary>
-        /// NHóm hàng hóa
-        /// </summary>
-        public string categoryname { get; set; }
-        /// <summary>
         /// Giá vốn
         /// </summary>
         public int? costprice { get; set; }
@@ -46,11 +32,6 @@ namespace WebBanHang.Common.Entities.Model
         public int? sellprice { get; set; }
 
         /// <summary>
-        /// link anh chính
-        /// </summary>
-        public string image { get; set; }
-
-        /// <summary>
         /// color
         /// </summary>
         public string color { get; set; }
@@ -59,5 +40,10 @@ namespace WebBanHang.Common.Entities.Model
         /// size
         /// </summary>
         public string size { get; set; }
+
+        /// <summary>
+        /// Tồn kho
+        /// </summary>
+        public int? inventory { get; set; }
     }
 }

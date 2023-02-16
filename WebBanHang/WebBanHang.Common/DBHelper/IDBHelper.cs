@@ -47,5 +47,21 @@ namespace WebBanHang.Common.DBHelper
         /// <param name="commandType"></param>
         /// <returns></returns>
         public (List<T1>, List<T2>, List<T3>) QueryMultipleResult<T1,T2,T3>(string query, DynamicParameters dynamicParam, CommandType? commandType = null);
+
+        /// <summary>
+        /// Thêm hàng loạt
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listInsert"></param>
+        /// <returns></returns>
+        public bool InsertBulk<T>(IEnumerable<T> listInsert);
+
+        /// <summary>
+        /// Update hàng loạt
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listInsert"></param>
+        /// <returns></returns>
+        public bool UpdateBulk<T>(IEnumerable<T> listUpdate);
     }
 }

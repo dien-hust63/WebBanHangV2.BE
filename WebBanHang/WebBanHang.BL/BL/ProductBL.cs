@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebBanHang.Common.AzureStorage;
 using WebBanHang.Common.Entities.Model;
@@ -9,6 +10,7 @@ using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
 using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.Services;
+using WebBanHang.DL.DL;
 using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.BL.BL
@@ -27,26 +29,50 @@ namespace WebBanHang.BL.BL
         public async Task<ServiceResult> InsertProduct(Product product)
         {
             ServiceResult serviceResult = new ServiceResult();
-            ProductNotFile productnotfile = new ProductNotFile();
-            serviceResult = Insert(product);
-            Product productAfterSave = new Product();
-            if (!serviceResult.Success)
+            //ProductNotFile productnotfile = new ProductNotFile();
+            //serviceResult = Insert(product);
+            //Product productAfterSave = new Product();
+            //if (!serviceResult.Success)
+            //{
+            //    return serviceResult;
+            //}
+            //else
+            //{
+            //    productnotfile.productcode = product.productcode;
+            //    productnotfile.productname = product.productname;
+            //}
+            //ServiceResult serviceResult2 = await _azureStorageBL.UploadBlobFileAsync(product.mainImage);
+            //if (serviceResult2.Success && serviceResult2 != null)
+            //{
+            //    productnotfile.image  = serviceResult2.Data?.ToString();
+            //    // save image link to database
+            //    _productDL.saveImageLinkProduct(product.productcode, productnotfile.image);
+            //}
+            //serviceResult.Data = productnotfile;
+            return serviceResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public ServiceResult InsertProductDetail(Dictionary<string, object> param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            Product product = new Product();
+            List<ProductDetail> listProductDetail = new List<ProductDetail>();
+            object value;
+            if (param.TryGetValue("ProductMaster", out value))
             {
-                return serviceResult;
+                product = JsonSerializer.Deserialize<Product>(value.ToString());
             }
-            else
+            if (param.TryGetValue("ProductDetail", out value))
             {
-                productnotfile.productcode = product.productcode;
-                productnotfile.productname = product.productname;
+                listProductDetail = JsonSerializer.Deserialize<List<ProductDetail>>(value.ToString());
             }
-            ServiceResult serviceResult2 = await _azureStorageBL.UploadBlobFileAsync(product.mainImage);
-            if (serviceResult2.Success && serviceResult2 != null)
-            {
-                productnotfile.image  = serviceResult2.Data?.ToString();
-                // save image link to database
-                _productDL.saveImageLinkProduct(product.productcode, productnotfile.image);
-            }
-            serviceResult.Data = productnotfile;
+            Product? result = _productDL.InsertProductDetail(product, listProductDetail);
+            serviceResult.Data = result;
             return serviceResult;
         }
 

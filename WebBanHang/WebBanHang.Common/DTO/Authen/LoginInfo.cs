@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebBanHang.Common.Entities.Model;
 
 namespace WebBanHang.Common
 {
@@ -9,6 +10,8 @@ namespace WebBanHang.Common
     {
         public string AccessToken { get; set; }
 
-        public string PermissionList { get; set; }
+        public List<RoleModule> PermissionList { get; set; }
+
+        public UserInfo UserInfo { get; set; }
     }
 }

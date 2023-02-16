@@ -52,9 +52,19 @@ namespace WebBanHang.Api.Controllers.Authentication
                 //trả về token và quyền
                 var jwt = new JWTService(_config);
                 var token = jwt.GenerateSecurityToken(employee.email);
+                List<RoleModule> permissionList = new List<RoleModule>();
+                List<RoleModule> permissionDefaultList = new List<RoleModule>();
+                UserInfo userInfo  = new UserInfo();
+                if (token != null)
+                {
+                    permissionList = _authenBL.GetListRoleModuleByUser(employee.email);
+                    userInfo = _authenBL.GetUserInfo(employee.email);
+                }
                 serviceResult.Data = new LoginInfo 
                 { 
-                    AccessToken=token
+                    AccessToken = token,
+                    PermissionList = permissionList,
+                    UserInfo = userInfo
                 };
                 return serviceResult;
             }

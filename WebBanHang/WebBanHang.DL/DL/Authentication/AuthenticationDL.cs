@@ -36,6 +36,20 @@ namespace WebBanHang.DL.DL
             return _dbHelper.QueryFirstOrDefault<Employee>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
         }
 
+        /// <summary>
+        /// Lấy danh sách các quyền module theo user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<RoleModule> GetListRoleModuleByUser(string email)
+        {
+            string storeName = "Proc_GetListRoleModuleByUser";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("v_email", email);
+            return _dbHelper.Query<RoleModule>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
+        }
+
         public bool registerManagementApplication(Employee employee)
         {
             string storeName = "Proc_RegisterManagement";

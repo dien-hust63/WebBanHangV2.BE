@@ -43,12 +43,33 @@ namespace WebBanHang.Api.Controllers
         }
 
         [HttpPost("uploadImage")]
-        public async Task<ServiceResult> UploadImage([FromForm] Product product)
+        public async Task<ServiceResult> UploadImage([FromForm] List<IFormFile> listImage)
         {
             ServiceResult serviceResult = new ServiceResult();
-            serviceResult = await _productBL.InsertProduct(product);
+            //serviceResult = await _productBL.InsertProduct(product);
             return serviceResult;
         }
 
+        /// <summary>
+        /// Thêm mới dữ liệu hàng hóa
+        /// </summary>
+        /// <param name="entity">Dữ liệu được thêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nvdien(17/8/2021)
+        /// ModifiedBy: ndien(17/8/2021)
+        [HttpPost("insertProductDetail")]
+        public ServiceResult InsertProductDetail([FromBody] Dictionary<string, object> param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _productBL.InsertProductDetail(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
     }
 }

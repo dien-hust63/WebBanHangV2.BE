@@ -15,11 +15,13 @@ namespace WebBanHang.BL.BL
     public class AuthenticationBL : IAuthenticationBL
     {
         IAuthenticationDL _authenDL;
+        IEmployeeBL _employeeBL;
         IConfiguration _config;
-        public AuthenticationBL(IAuthenticationDL authenDL, IConfiguration config) 
+        public AuthenticationBL(IAuthenticationDL authenDL, IConfiguration config, IEmployeeBL employeeBL) 
         {
             _authenDL = authenDL;
             _config = config;
+            _employeeBL = employeeBL;
         }
         /// <summary>
         /// kiểm tra tài khoản có hợp lệ không
@@ -40,6 +42,45 @@ namespace WebBanHang.BL.BL
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Lấy danh sách các quyền của người dùng theo vai trò đối với các module
+        /// </summary>
+        /// <returns></returns>
+        public List<RoleModule> GetListRoleModuleByUser(string email)
+        {
+            // Lấy được thông tin user 
+            List<RoleModule> listRoleModule = _authenDL.GetListRoleModuleByUser(email);
+            return listRoleModule;
+        }
+
+        /// <summary>
+        /// Lấy thông tin user đăng nhập
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="isemployee"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public UserInfo GetUserInfo(string email, bool isemployee = true)
+        {
+            UserInfo userInfo = new UserInfo();
+            if (isemployee)
+            {
+                Employee employee = _employeeBL.GetEmployeeInfoByEmail(email);
+                if (employee != null)
+                {
+                    userInfo.iduser = employee.idemployee;
+                    userInfo.username = employee.employeename;
+                    userInfo.email = employee.email;
+                    userInfo.branchid= employee.branchid;
+                    userInfo.branchname= employee.branchname;
+                    userInfo.isemployee = isemployee;
+                    userInfo.idrole = employee.idrole;
+                    userInfo.rolename = employee.rolename;
+                }
+            }
+            return userInfo;
         }
 
         public ServiceResult loginManagementApplication(Employee employee)
