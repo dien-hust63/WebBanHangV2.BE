@@ -19,8 +19,25 @@ namespace WebBanHang.Common.Entities.Model
 
         public string address { get; set; }
 
-        public int branchmanagerid { get; set; }
+        public int? branchmanagerid { get; set; }
 
         public string branchmanagername { get; set; }
+
+        public int? provinceid { get; set; }
+
+        public string provincename { get; set; }
+
+        public int? districtid { get; set; }
+
+        public string districtname { get; set; }
+
+        public string wardid { get; set; }
+
+        public string wardname { get; set; }
+
+        /// <summary>
+        /// Sử dụng làm địa chỉ mặc định tính giá vận chuyển online
+        /// </summary>
+        public bool isaddressdefault { get; set; }
     }
 }

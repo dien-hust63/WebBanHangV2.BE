@@ -13,6 +13,8 @@ namespace WebBanHang.Common.Entities.Model
 
         public string username { get; set; }
 
+        public string usercode { get; set; }
+
         public string email { get; set; }
 
         public bool isemployee { get; set; }
@@ -21,8 +23,12 @@ namespace WebBanHang.Common.Entities.Model
 
         public string branchname { get; set; }
 
-        public int? idrole { get; set; }
+        public int? roleid { get; set; }
 
         public string rolename { get; set; }
+
+        public int statusid { get; set; }
+
+        public string statusname { get; set; }
     }
 }

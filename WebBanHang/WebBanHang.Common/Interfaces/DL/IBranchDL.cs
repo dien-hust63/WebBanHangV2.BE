@@ -9,5 +9,6 @@ namespace WebBanHang.Common.Interfaces.DL
 {
     public interface IBranchDL : IBaseDL<Branch>
     {
+        public List<Branch> getBrancByUser(string email);
     }
 }

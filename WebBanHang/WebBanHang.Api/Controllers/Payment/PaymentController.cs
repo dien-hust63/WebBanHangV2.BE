@@ -27,7 +27,7 @@ namespace WebBanHang.Api.Controllers
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _paymentBL.paymentVNPay();
+                serviceResult = _paymentBL.paymentVNPay(payment);
             }
             catch (Exception ex)
             {

@@ -19,5 +19,15 @@ namespace WebBanHang.BL.BL
             _branchDL = branchDL;
         }
 
+        /// <summary>
+        /// lấy danh sách branch theo user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<Branch> getBrancByUser(string email)
+        {
+           return  _branchDL.getBrancByUser(email);
+        }
     }
 }

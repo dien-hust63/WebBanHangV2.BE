@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Gather.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using WebBanHang.Common.Attributes;
 
 namespace WebBanHang.Common.Entities.Model
 {
-    public class Product
+    public class Product:BaseEntity
     {
         [AttributeCustomId]
         public int idproduct { get; set; }
@@ -46,6 +47,11 @@ namespace WebBanHang.Common.Entities.Model
         public int? sellprice { get; set; }
 
         /// <summary>
+        /// Số lượng tồn
+        /// </summary>
+        public int? inventory { get; set; }
+
+        /// <summary>
         /// link anh chính
         /// </summary>
         public string image { get; set; }
@@ -59,5 +65,9 @@ namespace WebBanHang.Common.Entities.Model
         /// size
         /// </summary>
         public string size { get; set; }
+
+        public int branchid { get; set; }
+
+        public string branchname { get; set; }
     }
 }

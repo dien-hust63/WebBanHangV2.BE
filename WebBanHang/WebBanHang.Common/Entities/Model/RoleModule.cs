@@ -32,6 +32,40 @@ namespace WebBanHang.Common.Entities.Model
         [AttributeCustomNotMap]
         public string modulename { get; set; }
 
+        /// <summary>
+        /// tên module
+        /// </summary>
+        [AttributeCustomNotMap]
+        public bool isparent { get; set; }
+
+
+        /// <summary>
+        /// tên module
+        /// </summary>
+        [AttributeCustomNotMap]
+        public int parentid { get; set; }
+
+        /// <summary>
+        /// tên module
+        /// </summary>
+        [AttributeCustomNotMap]
+        public string icon { get; set; }
+
+        /// <summary>
+        /// tên module
+        /// </summary>
+        [AttributeCustomNotMap]
+        public string routename { get; set; }
+
+        /// <summary>
+        /// tên module
+        /// </summary>
+        [AttributeCustomNotMap]
+        public int sortorder { get; set; }
+
+        [AttributeCustomNotMap]
+        public string modulecode { get; set; }
+
 
     }
 }

@@ -65,6 +65,16 @@ namespace WebBanHang.Common.Interfaces.Base
         TEntity GetEntityByProperty(string propName, object propValue);
 
         /// <summary>
+        /// Lấy thông tin theo property
+        /// </summary>
+        /// <param name="propName">Tên property</param>
+        /// <param name="propValue">Gía trị property</param>
+        /// <returns></returns>
+        /// CreatedBy: nvdien(19/8/2021)
+        /// ModifiedBy: nvdien(19/8/2021)
+        List<TEntity> GetListEntityByProperty(string propName, object propValue);
+
+        /// <summary>
         /// Xóa nhiều 
         /// </summary>
         /// <param name="entityIds">chuỗi chứa các Id</param>

@@ -12,6 +12,11 @@ namespace WebBanHang.Common.Entities.Model
         [AttributeCustomId]
         public int idproductdetail { get; set; }
 
+        /// <summary>
+        /// id sản phẩm cha
+        /// </summary>
+        public int idproduct { get; set; }
+
         [AttributeCustomUnique]
         [AttributeCustomDisplayName("Mã hàng hóa")]
         public string productcode { get; set; }

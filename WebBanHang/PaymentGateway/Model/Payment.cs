@@ -7,5 +7,6 @@ namespace PaymentGateway.Model
 {
     public class Payment
     {
+        public int Amount { get; set; }
     }
 }

@@ -36,11 +36,20 @@ namespace WebBanHang.Common.Enumeration
             [Display(Name = "Chưa kích hoạt")]
             NotActive = 1,
 
-            [Display(Name = "Đang sử dụng")]
+            [Display(Name = "Đã kích hoạt")]
             Active = 2,
+        }
 
-            [Display(Name = "Ngừng kích hoạt")]
-            Deactive = 3
+        public enum ProductSortOrder
+        {
+            [Display(Name = "Mới nhất")]
+            Newest = 1,
+
+            [Display(Name = "Giá thấp đến cao")]
+            PriceAsc = 2,
+
+            [Display(Name = "Giá cao xuống thấp")]
+            PriceDes = 3
         }
     }
 }

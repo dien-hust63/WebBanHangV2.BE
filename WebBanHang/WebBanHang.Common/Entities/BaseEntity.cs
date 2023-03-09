@@ -12,22 +12,22 @@ namespace Gather.ApplicationCore.Entities
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? createddate { get; set; }
 
         /// <summary>
         /// Người tạo
         /// </summary>
-        public string CreatedBy { get; set; }
+        public string createdby { get; set; }
 
         /// <summary>
         /// Ngày chỉnh sửa
         /// </summary>
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? modifieddate { get; set; }
 
         /// <summary>
         /// Người chỉnh sửa
         /// </summary>
-        public string ModifiedBy { get; set; }
+        public string modifiedby { get; set; }
         #endregion
     }
 }

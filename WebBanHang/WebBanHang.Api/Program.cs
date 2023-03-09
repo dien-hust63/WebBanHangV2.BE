@@ -38,6 +38,7 @@ builder.Services.AddScoped<IPaymentBL, PaymentBL>();
 builder.Services.AddScoped<IAzureStorageBL, AzureStorageBL>();
 builder.Services.AddScoped<IDBHelper, DBHelper>();
 builder.Services.AddScoped<IMailDL, MailDL>();
+builder.Services.AddScoped<IOrderBL, OrderBL>();
 //BL DI
 builder.Services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
 builder.Services.AddScoped<IEmployeeDL, EmployeeDL>();
@@ -47,6 +48,7 @@ builder.Services.AddScoped<IBranchDL, BranchDL>();
 builder.Services.AddScoped<IAuthenticationDL, AuthenticationDL>();
 builder.Services.AddScoped<IMailBL, MailBL>();
 builder.Services.AddScoped<IProductDL, ProductDL>();
+builder.Services.AddScoped<IOrderDL, OrderDL>();
 // swagger
 builder.Services.AddSwaggerGen(c =>
 {

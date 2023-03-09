@@ -89,7 +89,7 @@ namespace WebBanHang.BL.BL
             mailContent.ToEmail = employee.email;
             mailContent.Subject = "Thông báo kích hoạt tài khoản truy cập 360 for men.";
             string bodyContent = "<div>Chào mừng bạn đến với 360ForMen.<br/>Để truy cập trang quản lý, bạn đăng nhập với thông tin:<br/>Tài khoản {0}<br/>Mật khẩu mặc định:{1}<br/>Đường dẫn:{2}</div>";
-            mailContent.Body = string.Format(bodyContent, employee.email, passRandom, "https://360formen.netlify.app/login");
+            mailContent.Body = string.Format(bodyContent, employee.email, passRandom, "https://360formen.netlify.app/management/login");
             
             _mailBL.sendEmail(mailContent);
         }

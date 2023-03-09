@@ -76,8 +76,11 @@ namespace WebBanHang.BL.BL
                     userInfo.branchid= employee.branchid;
                     userInfo.branchname= employee.branchname;
                     userInfo.isemployee = isemployee;
-                    userInfo.idrole = employee.idrole;
+                    userInfo.roleid = employee.roleid;
                     userInfo.rolename = employee.rolename;
+                    userInfo.usercode = employee.employeecode;
+                    userInfo.statusid = employee.statusid;
+                    userInfo.statusname = employee.statusname;
                 }
             }
             return userInfo;

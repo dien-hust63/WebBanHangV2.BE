@@ -9,5 +9,6 @@ namespace WebBanHang.Common.Interfaces.BL
 {
     public interface IBranchBL : IBaseBL<Branch>
     {
+        public List<Branch> getBrancByUser(string email);
     }
 }

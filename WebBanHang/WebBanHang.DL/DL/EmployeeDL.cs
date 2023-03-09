@@ -30,7 +30,7 @@ namespace WebBanHang.DL.DL
         /// <exception cref="NotImplementedException"></exception>
         public bool activeAccount(Employee employee)
         {
-            string sql = "update employee e set e.statusid = @statusid, e.statustext = @statustext, e.password = @password where e.idemployee = @idemployee";
+            string sql = "update employee e set e.statusid = @statusid, e.statusname = @statustext, e.password = @password where e.idemployee = @idemployee";
             DynamicParameters dynamicParam = new DynamicParameters();
             dynamicParam.Add("@statusid", (int)AccountStatus.Active);
             dynamicParam.Add("@statustext", AccountStatus.Active.GetDisplayName());
@@ -48,10 +48,10 @@ namespace WebBanHang.DL.DL
         /// <exception cref="NotImplementedException"></exception>
         public bool deactiveAccount(Employee employee)
         {
-            string sql = "update employee e set e.statusid = @statusid, e.statustext = @statustext where e.idemployee = @idemployee";
+            string sql = "update employee e set e.statusid = @statusid, e.statusname = @statustext where e.idemployee = @idemployee";
             DynamicParameters dynamicParam = new DynamicParameters();
-            dynamicParam.Add("@statusid", (int)AccountStatus.Deactive);
-            dynamicParam.Add("@statustext", AccountStatus.Deactive.GetDisplayName());
+            dynamicParam.Add("@statusid", (int)AccountStatus.NotActive);
+            dynamicParam.Add("@statustext", AccountStatus.NotActive.GetDisplayName());
             dynamicParam.Add("@idemployee", employee.idemployee);
             return _dbHelper.Execute(sql, dynamicParam, commandType: CommandType.Text) > 0;
         }

@@ -127,6 +127,24 @@ namespace WebBanHang.DL.BaseDL
             var entity = _dbHelper.QueryFirstOrDefault<TEntity>(sqlCommand,  dynamicParameters);
             return entity;
         }
+
+        /// <summary>
+        /// Lấy thông tin theo property
+        /// </summary>
+        /// <param name="propName">Tên property</param>
+        /// <param name="propValue">Gía trị property</param>
+        /// <returns></returns>
+        /// CreatedBy: nvdien(19/8/2021)
+        /// ModifiedBy: nvdien(19/8/2021)
+        public List<TEntity> GetListEntityByProperty(string propName, object propValue)
+        {
+            var sqlCommand = $"SELECT * from {_className} WHERE {propName} = @{propName}";
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add($"@{propName}", propValue);
+            var entity = _dbHelper.Query<TEntity>(sqlCommand, dynamicParameters);
+            return entity;
+        }
+
         /// <summary>
         /// Lay danh sach du lieu paging
         /// </summary>
@@ -221,9 +239,14 @@ namespace WebBanHang.DL.BaseDL
             string listValue = "";
             foreach (var property in properties)
             {
+                if (property.IsDefined(typeof(AttributeCustomId), false)) continue;
                 if (property.IsDefined(typeof(AttributeCustomNotMap), false)) continue;
                 var propName = property.Name;
                 var propValue = property.GetValue(entity);
+                if(propName == "createddate")
+                {
+                    propValue = DateTime.Now;
+                }
                 listProperty += $"{propName},";
                 listValue += $"@{propName},";
                 dynamicParameters.Add($"@{propName}", propValue);

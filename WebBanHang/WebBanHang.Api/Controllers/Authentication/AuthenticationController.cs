@@ -11,6 +11,7 @@ using WebBanHang.Common;
 using WebBanHang.Common.Entities;
 using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.BL;
+using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.Api.Controllers.Authentication
 {
@@ -60,6 +61,11 @@ namespace WebBanHang.Api.Controllers.Authentication
                     permissionList = _authenBL.GetListRoleModuleByUser(employee.email);
                     userInfo = _authenBL.GetUserInfo(employee.email);
                 }
+                if(userInfo.statusid == (int)AccountStatus.NotActive)
+                {
+                    serviceResult.setError("Tài khoản chưa được kích hoạt hoặc bị ngừng kích hoạt.");
+                    return serviceResult;
+                }
                 serviceResult.Data = new LoginInfo 
                 { 
                     AccessToken = token,
@@ -67,6 +73,21 @@ namespace WebBanHang.Api.Controllers.Authentication
                     UserInfo = userInfo
                 };
                 return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("getPermission")]
+        public ServiceResult getPermissionUser(Employee employee)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _authenBL.GetListRoleModuleByUser(employee.email);
             }
             catch (Exception ex)
             {

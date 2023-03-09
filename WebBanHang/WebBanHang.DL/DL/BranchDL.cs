@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using WebBanHang.Common.Entities.Model;
 using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.ServiceCollection;
 using WebBanHang.DL.BaseDL;
+using static Gather.ApplicationCore.Constant.RoleProject;
 
 namespace WebBanHang.DL.DL
 {
@@ -17,5 +19,19 @@ namespace WebBanHang.DL.DL
         { 
         }
 
+        /// <summary>
+        /// lấy dah sách chi nhánh theo user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<Branch> getBrancByUser(string email)
+        {
+            string storeName = "Proc_GetBranchByUser";
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@email", email);
+            List<Branch> listBranch = _dbHelper.Query<Branch>(storeName, param, System.Data.CommandType.StoredProcedure);
+            return listBranch;
+        }
     }
 }

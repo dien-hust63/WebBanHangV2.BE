@@ -26,9 +26,9 @@ namespace WebBanHang.Common.AzureStorage
         private readonly string _storageUrl;
         public AzureStorageBL(IConfiguration configuration)
         {
-            _storageConnectionString = configuration.GetSection("BlobConnectionString").ToString();
-            _storageContainerName = configuration.GetSection("BlobContainerName").ToString();
-            _storageUrl = configuration.GetSection("AzureStorageURL").ToString();
+            _storageConnectionString = configuration["BlobConnectionString"].ToString();
+            _storageContainerName = configuration["BlobContainerName"].ToString();
+            _storageUrl = configuration["AzureStorageURL"].ToString();
         }
 
         public async Task<List<BlobStorage>> GetAllBlobFiles()
@@ -71,7 +71,7 @@ namespace WebBanHang.Common.AzureStorage
             try
             {
                 BlobContainerClient blobcontaninerClient = new BlobContainerClient(_storageConnectionString, _storageContainerName);
-                string fileName = string.Concat(DateTime.Now.ToString("yyyyMMddHHmmss") ,"_", file.FileName);
+                string fileName = file.FileName;
                 using (var stream = new MemoryStream())
                 {
                     await file.CopyToAsync(stream);

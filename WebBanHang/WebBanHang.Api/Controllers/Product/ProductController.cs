@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebBanHang.Common.AzureStorage;
 using WebBanHang.Common.Entities.Model;
+using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
 
@@ -58,7 +59,68 @@ namespace WebBanHang.Api.Controllers
         /// CreatedBy: nvdien(17/8/2021)
         /// ModifiedBy: ndien(17/8/2021)
         [HttpPost("insertProductDetail")]
-        public ServiceResult InsertProductDetail([FromBody] Dictionary<string, object> param)
+        public async Task<ServiceResult> InsertProductDetail([FromForm] ProductDetailParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = await _productBL.InsertProductDetail(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpGet("getProductDetail/{entityId}")]
+        public ServiceResult getProductDetail(int entityId)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _productBL.getProductDetail(entityId);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+
+        [HttpGet("getProductDetailByBranch/{branchid}")]
+        public ServiceResult getProductDetailByBranch(int branchid)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _productBL.getProductDetailByBranch(branchid);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("updateProductDetail")]
+        public async Task<ServiceResult> updateProductDetail([FromForm] ProductDetailParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = await _productBL.UpdateProductDetail(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("getListProductByCategory")]
+        public ServiceResult getListProductByCategory(ProductByCategoryParam param)
         {
             ServiceResult serviceResult = new ServiceResult();
             try

@@ -1,4 +1,5 @@
 ﻿using Gather.ApplicationCore.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WebBanHang.Common.AzureStorage;
 using WebBanHang.Common.Entities.Model;
+using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.Base;
 using WebBanHang.Common.Interfaces.BL;
 using WebBanHang.Common.Interfaces.DL;
+using WebBanHang.Common.Library;
 using WebBanHang.Common.Services;
 using WebBanHang.DL.DL;
 using static WebBanHang.Common.Enumeration.Enumeration;
@@ -19,11 +22,12 @@ namespace WebBanHang.BL.BL
     {
         IProductDL _productDL;
         IAzureStorageBL _azureStorageBL;
-
-        public ProductBL(IBaseDL<Product> baseDL, IProductDL productDL, IAzureStorageBL azureStorageBL) : base(baseDL)
+        IBranchBL _branchBL;
+        public ProductBL(IBaseDL<Product> baseDL, IProductDL productDL, IAzureStorageBL azureStorageBL, IBranchBL branchBL) : base(baseDL)
         {
             _productDL = productDL;
             _azureStorageBL = azureStorageBL;
+            _branchBL = branchBL;
         }
 
         public async Task<ServiceResult> InsertProduct(Product product)
@@ -57,22 +61,104 @@ namespace WebBanHang.BL.BL
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public ServiceResult InsertProductDetail(Dictionary<string, object> param)
+        public async Task<ServiceResult> InsertProductDetail(ProductDetailParam param)
         {
             ServiceResult serviceResult = new ServiceResult();
             Product product = new Product();
             List<ProductDetail> listProductDetail = new List<ProductDetail>();
-            object value;
-            if (param.TryGetValue("ProductMaster", out value))
+            List<Branch> listBranch = (List<Branch>)_branchBL.GetAllEntities().Data;
+            List<Product> listProductWithBranch = new List<Product>();
+            
+            product = JsonSerializer.Deserialize<Product>(param.product);
+            listProductWithBranch.Add(product);
+            listProductDetail = JsonSerializer.Deserialize<List<ProductDetail>>(param.productdetail);
+
+            foreach (Branch branch in listBranch)
             {
-                product = JsonSerializer.Deserialize<Product>(value.ToString());
+                if(product.branchid != branch.idbranch)
+                {
+                    Product newProduct = CommonFunction.Clone<Product>(product);
+                    newProduct.inventory = 0;
+                    newProduct.branchid = branch.idbranch;
+                    newProduct.branchname = branch.branchname;
+                    listProductWithBranch.Add(newProduct);
+                }
             }
-            if (param.TryGetValue("ProductDetail", out value))
+            Product? result = _productDL.InsertProductDetail(listProductWithBranch, listProductDetail, listBranch, product.branchid);
+            try
             {
-                listProductDetail = JsonSerializer.Deserialize<List<ProductDetail>>(value.ToString());
+                foreach (var file in param.file)
+                {
+                    await _azureStorageBL.UploadBlobFileAsync(file);
+                }
             }
-            Product? result = _productDL.InsertProductDetail(product, listProductDetail);
+            catch (Exception ex)
+            {
+
+                serviceResult.setError("Upload ảnh lỗi");
+                return serviceResult;
+            }
+            
             serviceResult.Data = result;
+            return serviceResult;
+        }
+
+
+        /// <summary>
+        /// sửa hàng hóa
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<ServiceResult> UpdateProductDetail(ProductDetailParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            Product product = new Product();
+            List<ProductDetail> listProductDetail = new List<ProductDetail>();
+            product = JsonSerializer.Deserialize<Product>(param.product);
+            listProductDetail = JsonSerializer.Deserialize<List<ProductDetail>>(param.productdetail);
+            Product? result = _productDL.UpdateProductDetail(product, listProductDetail);
+            try
+            {
+                if(param.file != null)
+                {
+                    foreach (var file in param.file)
+                    {
+                        await _azureStorageBL.UploadBlobFileAsync(file);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                serviceResult.setError("Upload ảnh lỗi");
+                return serviceResult;
+            }
+
+            serviceResult.Data = result;
+            return serviceResult;
+        }
+
+        /// <summary>
+        /// Lấy chi tiết sản phầm
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        public ServiceResult getProductDetail(int entityId)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            serviceResult.Data = _productDL.getProductDetail(entityId);
+            return serviceResult;
+        }
+
+        /// <summary>
+        /// Lấy chi tiết sản phầm
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        public ServiceResult getProductDetailByBranch(int branchid)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            serviceResult.Data = _productDL.getProductDetailByBranch(branchid);
             return serviceResult;
         }
 
@@ -88,5 +174,17 @@ namespace WebBanHang.BL.BL
             //}
         }
 
+        /// <summary>
+        /// Lấy danh sách sản phẩm
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public ServiceResult getListProductByCategory(ProductByCategoryParam param)
+        {
+
+            ServiceResult serviceResult = new ServiceResult();
+            serviceResult.Data = _productDL.getListProductByCategory(param);
+            return serviceResult;
+        }
     }
 }

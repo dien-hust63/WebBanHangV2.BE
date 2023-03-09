@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebBanHang.Api.Controllers
 {
-    [Authorize]
     public class EmployeeController : BaseEntityController<Employee>
     {
         IBaseBL<Employee> _baseBL;

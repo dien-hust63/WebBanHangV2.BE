@@ -1,4 +1,5 @@
 ﻿using Gather.ApplicationCore.Entities;
+using PaymentGateway.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace PaymentGateway.Interface
 {
     public interface IPaymentBL
     {
-        public ServiceResult paymentVNPay();
+        public ServiceResult paymentVNPay(Payment payment);
 
     }
 }
