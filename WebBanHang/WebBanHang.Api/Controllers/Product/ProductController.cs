@@ -63,7 +63,7 @@ namespace WebBanHang.Api.Controllers
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _productBL.InsertProductDetail(param);
+                serviceResult =  _productBL.getListProductByCategory(param);
             }
             catch (Exception ex)
             {
