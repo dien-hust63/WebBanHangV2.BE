@@ -130,7 +130,7 @@ namespace WebBanHang.DL.DL
         public BasePagingResponse<Product> getListProductByCategory(ProductByCategoryParam param)
         {
             BasePagingResponse<Product> basePagingResponse = new BasePagingResponse<Product>();
-            string sql = "select p.* from product p ";
+            string sql = "select p.* from product p inner join branch b on p.branchid = b.idbranch and  b.isaddressdefault = true ";
             string v_where = "where (@categoryid is null or p.categoryid = @categoryid) and (@searchtext is null or p.productname like concat('%', @searchtext, '%') or p.categoryname like concat('%', @searchtext, '%')) ";
             string v_orderBy = "";
             switch (param.SortBy)

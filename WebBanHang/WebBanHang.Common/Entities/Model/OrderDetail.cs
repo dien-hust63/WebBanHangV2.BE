@@ -9,9 +9,10 @@ namespace WebBanHang.Common.Entities.Model
 {
     public class OrderDetail
     {
+        [AttributeCustomId]
         public int idorderdetail { get; set; }
 
-        public int idorder { get; set; }
+        public int idsaleorder { get; set; }
 
         public int idproductdetail { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Gather.ApplicationCore.Entities;
+﻿
+using Gather.ApplicationCore.Entities;
 using Gather.ApplicationCore.Entities.Param;
 using Microsoft.AspNetCore.Mvc;
 using System;

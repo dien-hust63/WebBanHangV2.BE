@@ -17,5 +17,27 @@ namespace WebBanHang.Common.Interfaces.BL
         /// <param name="param"></param>
         /// <returns></returns>
         public ServiceResult InsertOrderDetail(OrderDetailParam param);
+
+
+        /// <summary>
+        /// Xem chi tiết sản phẩm
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+
+        ServiceResult getOrderDetail(int entityId);
+
+        /// <summary>
+        /// Cập nhật đơn hàng
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public ServiceResult UpdateOrderDetail(OrderDetailParam param);
+
+        /// <summary>
+        /// Tạo mã đơn hàng tự động
+        /// </summary>
+        /// <returns></returns>
+        public string CreateAutoOrderCode();
     }
 }

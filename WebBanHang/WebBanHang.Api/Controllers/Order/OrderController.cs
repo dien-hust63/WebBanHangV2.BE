@@ -46,6 +46,52 @@ namespace WebBanHang.Api.Controllers
             return serviceResult;
         }
 
+        [HttpGet("getOrderDetail/{entityId}")]
+        public ServiceResult getOrderDetail(int entityId)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult = _orderBL.getOrderDetail(entityId);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("updateOrderDetail")]
+        public ServiceResult updateOrderDetail(OrderDetailParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult =  _orderBL.UpdateOrderDetail(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+
+        [HttpGet("getOrderCodeAuto")]
+        public ServiceResult getOrderCodeAuto()
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _orderBL.CreateAutoOrderCode();
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
 
     }
 }

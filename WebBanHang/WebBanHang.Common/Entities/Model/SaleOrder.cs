@@ -1,16 +1,19 @@
-﻿using System;
+﻿using Gather.ApplicationCore.Constant;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebBanHang.Common.Attributes;
+using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.Common.Entities.Model
 {
     public class SaleOrder
     {
         [AttributeCustomId]
-        public int idorder { get; set; }
+        public int idsaleorder { get; set; }
 
         /// <summary>
         /// mã đơn hàng
@@ -68,7 +71,7 @@ namespace WebBanHang.Common.Entities.Model
         /// <summary>
         /// nhân viên tiếp nhận
         /// </summary>
-        public string receiveemployeeid { get; set; }
+        public int receiveemployeeid { get; set; }
 
         /// <summary>
         /// tên nhân viên tiếp nhận
@@ -93,7 +96,19 @@ namespace WebBanHang.Common.Entities.Model
         /// <summary>
         /// Hình thức mua hàng
         /// </summary>
-        public string ordertypename { get; set; }
+        public string ordertypename {
+            get
+            {
+                foreach (OrderType foo in Enum.GetValues(typeof(OrderType)))
+                {
+                    if (checkoutstatusid == (int)foo)
+                    {
+                        return foo.GetDisplayName();
+                    }
+                }
+                return "";
+            }
+        }
 
         /// <summary>
         /// trạng thái thanh toán
@@ -103,7 +118,20 @@ namespace WebBanHang.Common.Entities.Model
         /// <summary>
         /// Trạng thái thanh toán
         /// </summary>
-        public string checkoutstatusname { get; set; }
+        public string checkoutstatusname
+        {
+            get
+            {
+                foreach (CheckoutStatus foo in Enum.GetValues(typeof(CheckoutStatus)))
+                {
+                    if (checkoutstatusid == (int)foo)
+                    {
+                        return foo.GetDisplayName();
+                    }
+                }
+                return "";
+            }
+        }
 
         /// <summary>
         /// Hình thức thanh toán
@@ -113,7 +141,52 @@ namespace WebBanHang.Common.Entities.Model
         /// <summary>
         /// Hình thức thanh toán
         /// </summary>
-        public string checkouttypename { get; set; }
+        public string checkouttypename {
+            get
+            {
+                foreach (CheckoutType foo in Enum.GetValues(typeof(CheckoutType)))
+                {
+                    if (checkouttypeid == (int)foo)
+                    {
+                        return foo.GetDisplayName();
+                    }
+                }
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// trạng thái đơn hàng
+        /// </summary>
+        public int statusid { get; set; }
+
+        /// <summary>
+        /// text trạng thái đơn hàng
+        /// </summary>
+        public string statusname
+        {
+            get
+            {
+                foreach (OrderStatus foo in Enum.GetValues(typeof(OrderStatus)))
+                {
+                    if(statusid == (int)foo)
+                    {
+                        return foo.GetDisplayName();
+                    }
+                }
+                return "";
+            }
+        }
+
+
+        [AttributeCustomNotMap]
+        public string orderdatetext
+        {
+            get
+            {
+                return orderdate.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+        }
     }
 }
 
