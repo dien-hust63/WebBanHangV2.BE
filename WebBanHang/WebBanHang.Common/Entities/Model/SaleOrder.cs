@@ -101,7 +101,7 @@ namespace WebBanHang.Common.Entities.Model
             {
                 foreach (OrderType foo in Enum.GetValues(typeof(OrderType)))
                 {
-                    if (checkoutstatusid == (int)foo)
+                    if (ordertypeid == (int)foo)
                     {
                         return foo.GetDisplayName();
                     }

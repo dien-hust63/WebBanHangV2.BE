@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebBanHang.Common.DBHelper;
 using WebBanHang.Common.Entities.Model;
+using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.ServiceCollection;
 using WebBanHang.DL.BaseDL;
@@ -43,6 +44,29 @@ namespace WebBanHang.DL.DL
                 SaleOrder = order,
                 OrderDetail = listOrderDetail
             };
+        }
+
+        public List<int> getReportRevenueByBranch(TimeParam param)
+        {
+            string storeName = "Proc_GetReportRevenueByBranch";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("v_startdate", param.startDate);
+            dynamicParam.Add("v_enddate", param.endDate);
+            return _dbHelper.Query<int>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
+        }
+
+        /// <summary>
+        /// báo cáo 1
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<SaleOrder> getReportRevenueByYear(ReportRevenueByYearParam param)
+        {
+            string storeName = "Proc_GetReportRevenueByYear";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("v_branchid", param.branchid);
+            dynamicParam.Add("v_year", param.year);
+            return _dbHelper.Query<SaleOrder>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
         }
 
         /// <summary>
@@ -91,6 +115,20 @@ namespace WebBanHang.DL.DL
                 return product;
             }
             return null;
+        }
+
+        /// <summary>
+        /// báo cáo hàng hóa được mua nhiều nhất ( top 10)
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<ReportProductBestSell> getReportProductBestSell(TimeParam param)
+        {
+            string storeName = "Proc_GetReportProductBestSell";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("v_startdate", param.startDate);
+            dynamicParam.Add("v_enddate", param.endDate);
+            return _dbHelper.Query<ReportProductBestSell>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
         }
 
     }

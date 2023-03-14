@@ -92,6 +92,51 @@ namespace WebBanHang.Api.Controllers
             return serviceResult;
         }
 
+        [HttpPost("getReportRevenueByYear")]
+        public ServiceResult getReportRevenueByYear(ReportRevenueByYearParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _orderBL.getReportRevenueByYear(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("getReportRevenueByBranch")]
+        public ServiceResult getReportRevenueByBranch(TimeParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _orderBL.getReportRevenueByBranch(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
+        [HttpPost("getReportProductBestSell")]
+        public ServiceResult getReportProductBestSell(TimeParam param)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            try
+            {
+                serviceResult.Data = _orderBL.getReportProductBestSell(param);
+            }
+            catch (Exception ex)
+            {
+                serviceResult.setError(ex.Message);
+            }
+            return serviceResult;
+        }
+
 
     }
 }

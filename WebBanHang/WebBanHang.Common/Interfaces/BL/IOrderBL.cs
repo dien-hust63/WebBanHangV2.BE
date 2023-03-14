@@ -39,5 +39,26 @@ namespace WebBanHang.Common.Interfaces.BL
         /// </summary>
         /// <returns></returns>
         public string CreateAutoOrderCode();
+
+        /// <summary>
+        /// lấy báo cáo doanh thu theo chi nhánh từng năm
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<double> getReportRevenueByYear(ReportRevenueByYearParam param);
+
+        /// <summary>
+        /// lấy báo cáo doanh thu theo chi nhánh từng năm
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<double> getReportRevenueByBranch(TimeParam param);
+
+        /// <summary>
+        /// báo cáo hàng hóa được mua nhiều nhất ( top 10)
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<ReportProductBestSell> getReportProductBestSell(TimeParam param);
     }
 }

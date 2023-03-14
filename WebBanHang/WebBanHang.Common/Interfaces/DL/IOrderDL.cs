@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebBanHang.Common.Entities.Model;
+using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.Base;
 
 namespace WebBanHang.Common.Interfaces.DL
@@ -37,6 +38,26 @@ namespace WebBanHang.Common.Interfaces.DL
         /// </summary>
         /// <returns></returns>
         public SaleOrder GetLastestOrder();
+
+        /// <summary>
+        /// trả về báo cáo doanh thu 1
+        /// </summary>
+        /// <param name="param"></param>
+        public List<SaleOrder> getReportRevenueByYear(ReportRevenueByYearParam param);
+
+        /// <summary>
+        /// lấy doanh số theo chi nhánh 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<int> getReportRevenueByBranch(TimeParam param);
+
+        /// <summary>
+        /// báo cáo hàng hóa được mua nhiều nhất ( top 10)
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<ReportProductBestSell> getReportProductBestSell(TimeParam param);
 
     }
 }

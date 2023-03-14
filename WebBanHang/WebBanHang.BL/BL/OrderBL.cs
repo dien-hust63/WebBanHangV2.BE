@@ -102,5 +102,50 @@ namespace WebBanHang.BL.BL
             serviceResult.Data = result;
             return serviceResult;
         }
+
+
+        /// <summary>
+        /// lấy báo cáo doanh thu theo chi nhánh từng năm
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<double> getReportRevenueByYear(ReportRevenueByYearParam param)
+        {
+            List<double> result = new List<double>();
+            // trả về list order theo chi nhánh trong năm của param
+            List<SaleOrder> listSaleOrder = _orderDL.getReportRevenueByYear(param);
+            for (int i = 1; i <= 12; i++)
+            {
+                int revenue = listSaleOrder.Where(x => x.orderdate.Value.Month == i).Sum(x => x.totalprice);
+                double output = (double)revenue / 1000000;
+                output = Math.Round(output, 1);
+                result.Add(output);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// lấy báo cáo doanh thu các chi nhánh biểu đồ tròn
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public List<double> getReportRevenueByBranch(TimeParam param)
+        {
+            List<double> result = new List<double>();
+            List<int> listRevenue = _orderDL.getReportRevenueByBranch(param);
+            foreach (var item in listRevenue)
+            {
+                double output = (double)item / 1000000;
+                output = Math.Round(output, 1);
+                result.Add(output);
+
+            }
+            return result;
+        }
+
+        public List<ReportProductBestSell> getReportProductBestSell(TimeParam param)
+        {
+            return _orderDL.getReportProductBestSell(param);
+        }
     }
 }
