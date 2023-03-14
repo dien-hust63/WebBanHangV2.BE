@@ -76,7 +76,7 @@ namespace WebBanHang.Common.Enumeration
             [Display(Name = "Đổi hàng")]
             Exchange = 7,
 
-            [Display(Name = "Đổi hàng")]
+            [Display(Name = "Trả hàng")]
             Return = 8,
 
             [Display(Name = "Hủy")]
