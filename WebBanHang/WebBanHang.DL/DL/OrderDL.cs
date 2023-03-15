@@ -48,7 +48,7 @@ namespace WebBanHang.DL.DL
 
         public List<int> getReportRevenueByBranch(TimeParam param)
         {
-            string storeName = "Proc_GetReportRevenueByBranchV2\t";
+            string storeName = "Proc_GetReportRevenueByBranchV2";
             DynamicParameters dynamicParam = new DynamicParameters();
             dynamicParam.Add("v_startdate", param.startDate);
             dynamicParam.Add("v_enddate", param.endDate);
