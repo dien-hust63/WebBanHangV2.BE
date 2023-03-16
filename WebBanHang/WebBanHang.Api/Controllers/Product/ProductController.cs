@@ -89,13 +89,13 @@ namespace WebBanHang.Api.Controllers
         }
 
 
-        [HttpGet("getProductDetailByBranch/{branchid}")]
-        public ServiceResult getProductDetailByBranch(int branchid)
+        [HttpPost("getProductDetailByBranch")]
+        public ServiceResult getProductDetailByBranch(ProductPopupParam param)
         {
             ServiceResult serviceResult = new ServiceResult();
             try
             {
-                serviceResult = _productBL.getProductDetailByBranch(branchid);
+                serviceResult = _productBL.getProductDetailByBranch(param);
             }
             catch (Exception ex)
             {

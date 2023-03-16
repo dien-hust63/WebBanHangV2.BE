@@ -48,11 +48,11 @@ namespace WebBanHang.DL.DL
 
         public List<int> getReportRevenueByBranch(TimeParam param)
         {
-            string storeName = "Proc_GetReportRevenueByBranchV2";
+            string storeName = "select COALESCE(sum(m.totalprice),0) from branch b left join (select case when s.deliverprice is null then s.totalprice else s.totalprice - s.deliverprice end as totalprice,s.branchid,s.branchname from saleorder s where date(s.orderdate) >= date(@startdate) and date(s.orderdate) <= date(@enddate) and s.statusid = 1) as m on b.idbranch = m.branchid group by b.idbranch order by b.idbranch desc;";
             DynamicParameters dynamicParam = new DynamicParameters();
-            dynamicParam.Add("v_startdate", param.startDate);
-            dynamicParam.Add("v_enddate", param.endDate);
-            return _dbHelper.Query<int>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
+            dynamicParam.Add("@startdate", param.startDate);
+            dynamicParam.Add("@enddate", param.endDate);
+            return _dbHelper.Query<int>(storeName, dynamicParam, System.Data.CommandType.Text);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace WebBanHang.DL.DL
         /// <param name="order"></param>
         /// <param name="listOrderDetail"></param>
         /// <returns></returns>
-        public SaleOrder InsertOrderDetail(SaleOrder order, List<OrderDetail> listOrderDetail)
+        public SaleOrder InsertOrderDetail(SaleOrder order, List<OrderDetail> listOrderDetail, List<ProductDetail> listProductDetail)
         {
             var result = Insert(order);
             if (result != null)
@@ -91,6 +91,7 @@ namespace WebBanHang.DL.DL
                     bool isSuccess = _dbHelper.InsertBulk(listOrderDetail);
 
                 }
+                _dbHelper.UpdateBulk(listProductDetail);
                 return order;
             }
             else
@@ -131,5 +132,18 @@ namespace WebBanHang.DL.DL
             return _dbHelper.Query<ReportProductBestSell>(storeName, dynamicParam, System.Data.CommandType.StoredProcedure);
         }
 
+        /// <summary>
+        /// laasy danh sach productdetail
+        /// </summary>
+        /// <param name="listProductID"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<ProductDetail> GetListProductDetailByListID(string listProductID)
+        {
+            string query = "SELECT * FROM productdetail p WHERE CONCAT(',',@listProductID,',') LIKE CONCAT('%,',p.idproductdetail,',%');";
+            DynamicParameters dynamicParam = new DynamicParameters();
+            dynamicParam.Add("@listProductID", listProductID);
+            return _dbHelper.Query<ProductDetail>(query, dynamicParam, System.Data.CommandType.Text);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Gather.ApplicationCore.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,18 @@ namespace WebBanHang.BL.BL
             SaleOrder order = new SaleOrder();
             List<OrderDetail> listOrderDetail = new List<OrderDetail>();
             order = JsonSerializer.Deserialize<SaleOrder>(param.order);
-
+            listOrderDetail = JsonSerializer.Deserialize<List<OrderDetail>>(param.orderdetail);
+            List<ProductDetail> listProductDetail = _orderDL.GetListProductDetailByListID(string.Join(",", listOrderDetail.Select(x => x.idproductdetail).ToArray()));
+            serviceResult = this.validateOrder(order, listOrderDetail, listProductDetail);
+            if (!serviceResult.Success)
+            {
+                return serviceResult;
+            }
             // Tạo mã đơn hàng tự động
             order.ordercode = CreateAutoOrderCode();
 
-            listOrderDetail = JsonSerializer.Deserialize<List<OrderDetail>>(param.orderdetail);
-            SaleOrder? result = _orderDL.InsertOrderDetail(order, listOrderDetail);
+            
+            SaleOrder? result = _orderDL.InsertOrderDetail(order, listOrderDetail, listProductDetail);
             if(order != null)
             {
                 // gửi mail
@@ -50,7 +57,35 @@ namespace WebBanHang.BL.BL
             serviceResult.Data = result;
             return serviceResult;
         }
-
+        public ServiceResult validateOrder(SaleOrder order, List<OrderDetail> orderDetail, List<ProductDetail> listProductDetail)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            
+            List<string> productcode = new List<string>();
+            foreach (var item in orderDetail)
+            {
+                ProductDetail currentProduct =  listProductDetail.Find(x => x.idproductdetail == item.idproductdetail);
+                int inventory = currentProduct != null ? currentProduct.inventory.Value : 0;
+                if(item.quantity > inventory)
+                {
+                    productcode.Add(item.productcode);
+                }
+            }
+            if(productcode.Count > 0)
+            {
+                string errorProduct = string.Join(",", productcode.ToArray());
+                serviceResult.Success = false;
+                serviceResult.ErrorMessage = $"{errorProduct} vượt quá số lượng tồn kho";
+                return serviceResult;
+            }
+            foreach (var item in listProductDetail)
+            {
+                OrderDetail currentProduct = orderDetail.Find(x => x.idproductdetail == item.idproductdetail);
+                int quantity = currentProduct != null ? currentProduct.quantity : 0;
+                item.inventory -= quantity;
+            }
+            return serviceResult;
+        }
         public string CreateAutoOrderCode()
         {
             string newCode = "";
@@ -145,7 +180,9 @@ namespace WebBanHang.BL.BL
 
         public List<ReportProductBestSell> getReportProductBestSell(TimeParam param)
         {
-            return _orderDL.getReportProductBestSell(param);
+            List<ReportProductBestSell> listProduct = _orderDL.getReportProductBestSell(param);
+            listProduct = listProduct.OrderBy(x => x.quantity).ToList();
+            return listProduct;
         }
     }
 }

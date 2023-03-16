@@ -155,10 +155,10 @@ namespace WebBanHang.BL.BL
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        public ServiceResult getProductDetailByBranch(int branchid)
+        public ServiceResult getProductDetailByBranch(ProductPopupParam param)
         {
             ServiceResult serviceResult = new ServiceResult();
-            serviceResult.Data = _productDL.getProductDetailByBranch(branchid);
+            serviceResult.Data = _productDL.getProductDetailByBranch(param);
             return serviceResult;
         }
 
@@ -186,5 +186,6 @@ namespace WebBanHang.BL.BL
             serviceResult.Data = _productDL.getListProductByCategory(param);
             return serviceResult;
         }
+
     }
 }

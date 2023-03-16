@@ -29,7 +29,7 @@ namespace WebBanHang.Common.Interfaces.BL
         /// <param name="branchid"></param>
         /// <returns></returns>
 
-        ServiceResult getProductDetailByBranch(int branchid);
+        ServiceResult getProductDetailByBranch(ProductPopupParam param);
 
         /// <summary>
         /// Thêm mới product

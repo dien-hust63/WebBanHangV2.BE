@@ -16,7 +16,7 @@ namespace WebBanHang.Common.Interfaces.DL
         /// <param name="product"></param>
         /// <param name="listProductDetail"></param>
         /// <returns></returns>
-        public SaleOrder InsertOrderDetail(SaleOrder order, List<OrderDetail> listOrderDetail);
+        public SaleOrder InsertOrderDetail(SaleOrder order, List<OrderDetail> listOrderDetail, List<ProductDetail> listProductDetail);
 
         /// <summary>
         /// Lấy chi tiết đơn hàng
@@ -58,6 +58,8 @@ namespace WebBanHang.Common.Interfaces.DL
         /// <param name="param"></param>
         /// <returns></returns>
         public List<ReportProductBestSell> getReportProductBestSell(TimeParam param);
+
+        public List<ProductDetail> GetListProductDetailByListID(string listProductID);
 
     }
 }

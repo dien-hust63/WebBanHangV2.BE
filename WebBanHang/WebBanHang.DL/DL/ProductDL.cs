@@ -166,13 +166,13 @@ namespace WebBanHang.DL.DL
             return basePagingResponse;
         }
 
-        public List<ProductDetail> getProductDetailByBranch(int branchid)
+        public List<ProductDetail> getProductDetailByBranch(ProductPopupParam param)
         {
-            
-            string sql = "select pd.* from productdetail pd left join product p on pd.idproduct  = p.idproduct where p.branchid = @branchid";
-            DynamicParameters param = new DynamicParameters();
-            param.Add("@branchid", branchid);
-            List<ProductDetail> listProductDetail = _dbHelper.Query<ProductDetail>(sql, param);
+            string sql = "select pd.* from productdetail pd left join product p on pd.idproduct  = p.idproduct WHERE p.branchid = @branchid AND (p.productname like CONCAT('%',@searchtext,'%') OR p.productcode like CONCAT('%',@searchtext,'%') OR @searchtext = '') ";
+            DynamicParameters dicParam = new DynamicParameters();
+            dicParam.Add("@branchid", param.branchid);
+            dicParam.Add("@searchtext", param.searchtext);
+            List<ProductDetail> listProductDetail = _dbHelper.Query<ProductDetail>(sql, dicParam);
             return listProductDetail;
         }
     }

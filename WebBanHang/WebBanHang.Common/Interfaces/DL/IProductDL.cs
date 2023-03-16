@@ -28,7 +28,7 @@ namespace WebBanHang.Common.Interfaces.DL
         /// <param name="branchid"></param>
         /// <returns></returns>
 
-        public List<ProductDetail> getProductDetailByBranch(int branchid);
+        public List<ProductDetail> getProductDetailByBranch(ProductPopupParam param);
 
         /// <summary>
         /// Lấy chi tiết sản phẩm
