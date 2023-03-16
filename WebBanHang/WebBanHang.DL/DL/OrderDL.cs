@@ -10,6 +10,7 @@ using WebBanHang.Common.Entities.Param;
 using WebBanHang.Common.Interfaces.DL;
 using WebBanHang.Common.ServiceCollection;
 using WebBanHang.DL.BaseDL;
+using static WebBanHang.Common.Enumeration.Enumeration;
 
 namespace WebBanHang.DL.DL
 {
@@ -91,7 +92,10 @@ namespace WebBanHang.DL.DL
                     bool isSuccess = _dbHelper.InsertBulk(listOrderDetail);
 
                 }
-                _dbHelper.UpdateBulk(listProductDetail);
+                if(order.ordertypeid == (int)OrderType.Direct)
+                {
+                    _dbHelper.UpdateBulk(listProductDetail);
+                }
                 return order;
             }
             else
