@@ -153,7 +153,7 @@ namespace WebBanHang.DL.DL
             string v_paging = "LIMIT @take OFFSET @skip; ";
             sql += string.Concat(v_where, v_orderBy, v_paging);
 
-            string sqlCount = "select count(*) from product p ";
+            string sqlCount = "select count(p.idproduct) from product p inner join branch b on p.branchid = b.idbranch and  b.isaddressdefault = true ";
             sql += string.Concat(sqlCount, v_where, v_orderBy);
             DynamicParameters dicParam = new DynamicParameters();
             dicParam.Add("@categoryid", param.categoryid);
